@@ -1,0 +1,30 @@
+{
+  "name": "axiom-journal",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.107.0",
+    "@types/three": "^0.184.1",
+    "@vitejs/plugin-react": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-quill": "^2.0.0",
+    "three": "^0.184.0",
+    "typescript": "latest",
+    "vite": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/pngjs": "^6.0.5",
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3",
+    "pngjs": "^7.0.0"
+  }
+}
