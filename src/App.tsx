@@ -912,8 +912,8 @@ function ArticlePage({ articleId }: { articleId: string }) {
 
           {/* Comments Modal Overlay */}
           {showCommentsModal && (
-            <div className="modal-backdrop" onClick={(e) => { if (e.target === e.currentTarget) setShowCommentsModal(false); }} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'grid', placeItems: 'center', padding: '20px' }}>
-              <div className="modal-content" style={{ background: 'var(--card)', width: '100%', maxWidth: '600px', maxHeight: '85vh', overflowY: 'auto', borderRadius: '24px', padding: '32px', boxShadow: '0 24px 48px rgba(0,0,0,0.2)', position: 'relative', animation: 'modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+            <div className="modal-backdrop" onClick={(e) => { if (e.target === e.currentTarget) setShowCommentsModal(false); }}>
+              <div className="modal-content">
                 <button onClick={() => setShowCommentsModal(false)} style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg)', border: '1px solid var(--line)', width: '36px', height: '36px', borderRadius: '50%', display: 'grid', placeItems: 'center', cursor: 'pointer', color: 'var(--muted)' }}>
                   <X size={18} />
                 </button>

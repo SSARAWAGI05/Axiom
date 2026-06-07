@@ -501,7 +501,7 @@ button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
   .footer-top{grid-template-columns:1fr 1fr 1fr 1fr}
 }
 @media(max-width:768px){
-  .topbar{top:12px;left:12px;right:12px;transform:none;padding:10px}
+  .topbar{top:12px;left:12px;right:12px;transform:none;padding:10px;justify-content:space-between}
   .menu-toggle{display:inline-grid}
   .nav{position:absolute;top:calc(100% + 12px);left:0;right:0;flex-direction:column;padding:24px 20px;background:var(--card);backdrop-filter:blur(32px) saturate(200%);border:1px solid var(--line);border-radius:28px;box-shadow:0 20px 40px rgba(0,0,0,0.15);gap:12px;opacity:0;transform:translateY(-16px) scale(0.98);visibility:hidden;transition:all 0.4s cubic-bezier(0.16,1,0.3,1)}
   .nav.open{opacity:1;transform:translateY(0) scale(1);visibility:visible}
@@ -545,6 +545,24 @@ button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
   .engagement-section form { padding: 20px !important; }
   .submit-form, .submit-guide-card, .submit-formats-card, .submit-faq-card { padding: 20px !important; border-radius: 16px; }
   .tracker-wrapper { padding: 24px !important; border-radius: 16px !important; }
+}
+
+.modal-backdrop {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+  z-index: 1000; display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-content {
+  background: var(--card); width: 100%; max-width: 600px;
+  max-height: 85vh; overflow-y: auto; border-radius: 24px;
+  padding: 32px; box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+  position: relative; animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media(max-width:768px){
+  .modal-backdrop { align-items: flex-start; padding-top: 80px; }
+  .modal-content { max-height: calc(100vh - 100px); padding: 24px; }
 }
 
 @keyframes modalSlideUp {
