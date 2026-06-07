@@ -130,11 +130,11 @@ button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
 .page-article{position:relative}
 .reading-progress-bar{position:fixed;top:0;left:0;height:4px;z-index:100;transition:width 0.1s linear}
 .article-hero{padding:140px 40px 140px;max-width:100%;margin:0 auto;text-align:center;background:radial-gradient(ellipse at top, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%);border-bottom:1px solid color-mix(in srgb, var(--accent) 15%, transparent)}
-.back-btn{display:inline-flex;align-items:center;gap:6px;margin-bottom:40px;font-size:0.85rem;padding:8px 16px;border-radius:12px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.05);position:absolute;top:100px;left:40px;border:1px solid var(--line)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;margin-bottom:40px;font-size:0.85rem;padding:8px 16px;border-radius:12px;background:var(--card);box-shadow:0 4px 12px rgba(0,0,0,0.05);position:absolute;top:100px;left:40px;border:1px solid var(--line)}
 .article-hero-tags{display:flex;justify-content:center;gap:12px;margin-bottom:24px}
 .article-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(3rem,6vw,4.5rem);line-height:1.05;color:var(--navy);letter-spacing:-0.03em;margin:0 auto 40px;max-width:900px}
 .article-hero-meta{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:24px}
-.meta-author{display:flex;align-items:center;gap:12px;text-align:left;background:#fff;padding:8px 24px 8px 8px;border-radius:99px;box-shadow:0 4px 12px rgba(0,0,0,0.03);border:1px solid var(--line)}
+.meta-author{display:flex;align-items:center;gap:12px;text-align:left;background:var(--card);padding:8px 24px 8px 8px;border-radius:99px;box-shadow:0 4px 12px rgba(0,0,0,0.03);border:1px solid var(--line)}
 .author-avatar{width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--accent) 15%,var(--bg2));color:var(--accent);display:grid;place-items:center}
 .meta-author strong{display:block;font-size:0.95rem;color:var(--navy)}
 .meta-author span{font-size:0.8rem;color:var(--muted)}
