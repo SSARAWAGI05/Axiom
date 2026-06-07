@@ -1103,20 +1103,27 @@ export function App() {
       {loading && <Preloader onComplete={() => setLoading(false)} />}
       <div className="app">
         <header className="topbar">
+          <button className="brand" onClick={() => go("home")} aria-label="Home">
+            <strong>{config.siteSettings.siteName}</strong>
+          </button>
+          
+          <div className="nav-sep"></div>
+
           <nav className={`nav ${menuOpen ? "open" : ""}`}>
             {pages.map(p => (
-              <button key={p.id} className={`nav-link ${page === p.id ? "active" : ""} ${p.id === "submit" ? "nav-submit" : ""}`} onClick={() => go(p.id)}>
+              <button key={p.id} className={`nav-link ${page === p.id ? "active" : ""} ${p.id === "submit" ? "nav-submit" : ""}`} onClick={() => { setMenuOpen(false); go(p.id); }}>
                 {p.label}
               </button>
             ))}
           </nav>
-          <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
-            {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
           <button className="menu-toggle" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
             {menuOpen ? <X /> : <Menu />}
           </button>
         </header>
+
+        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+          {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+        </button>
 
         <main className="main-content">
           <PageTransition pageKey={page}>
