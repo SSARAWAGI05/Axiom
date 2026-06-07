@@ -35,6 +35,7 @@ import {
   MapPin,
   Menu,
   MessageCircle,
+  MessageSquare,
   Moon,
   Palette,
   PenLine,
@@ -826,6 +827,7 @@ function ArticlePage({ articleId }: { articleId: string }) {
   const [commentName, setCommentName] = useState("");
   const [commentText, setCommentText] = useState("");
   const [loadingComments, setLoadingComments] = useState(true);
+  const [showCommentsModal, setShowCommentsModal] = useState(false);
 
   useEffect(() => {
     if (!article) return;
@@ -893,51 +895,60 @@ function ArticlePage({ articleId }: { articleId: string }) {
 
       <div className="article-layout">
         <article className="article-content" style={{ "--accent": d.color } as React.CSSProperties}>
+          <div className="article-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '40px', paddingBottom: '24px', borderBottom: '1px solid var(--line)' }}>
+            <button onClick={handleClap} className="action-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '99px', background: 'var(--blue-pale)', border: '1px solid rgba(37,99,235,0.15)', color: 'var(--blue)', cursor: 'pointer', fontWeight: 700, fontSize: '0.95rem', transition: 'all 0.2s' }}>
+              <Heart size={20} color={claps > 0 ? "var(--pink)" : "currentColor"} fill={claps > 0 ? "var(--pink)" : "none"} />
+              {claps}
+            </button>
+            <button onClick={() => setShowCommentsModal(true)} className="action-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '99px', background: 'var(--bg)', border: '1px solid var(--line)', color: 'var(--navy)', cursor: 'pointer', fontWeight: 700, fontSize: '0.95rem', transition: 'all 0.2s' }}>
+              <MessageCircle size={20} />
+              {comments.length}
+            </button>
+          </div>
+          
           <p className="lead">{article.summary}</p>
           
           <div className="article-body-text" dangerouslySetInnerHTML={{ __html: article.content || "This article has no content yet." }} />
-        </article>
-        
-        {/* Engagement Section */}
-        <div className="engagement-section" style={{ maxWidth: '700px', margin: '40px auto 0' }}>
-          <div className="claps-bar" style={{ display: 'flex', alignItems: 'center', gap: '16px', paddingBottom: '32px', borderBottom: '1px solid var(--line)', marginBottom: '32px' }}>
-            <button onClick={handleClap} className="clap-btn" style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--card)', border: '1px solid var(--line)', display: 'grid', placeItems: 'center', color: 'var(--navy)', cursor: 'pointer', boxShadow: 'var(--shadow)', transition: 'all 0.2s' }}>
-              <Heart size={24} color={claps > 0 ? "var(--pink)" : "currentColor"} fill={claps > 0 ? "var(--pink)" : "none"} />
-            </button>
-            <div>
-              <strong style={{ fontSize: '1.2rem', color: 'var(--navy)', display: 'block' }}>{claps}</strong>
-              <span style={{ fontSize: '0.85rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 800 }}>Claps</span>
-            </div>
-          </div>
-          
-          <div className="comments-section">
-            <h3 style={{ fontSize: '1.4rem', color: 'var(--navy)', marginBottom: '24px', fontFamily: '"Space Grotesk", sans-serif' }}>Discussion ({comments.length})</h3>
-            
-            <form onSubmit={handleCommentSubmit} style={{ display: 'grid', gap: '12px', marginBottom: '40px', background: 'var(--card)', padding: '24px', borderRadius: '20px', border: '1px solid var(--line)', boxShadow: 'var(--shadow)' }}>
-              <input type="text" placeholder="Your Name" value={commentName} onChange={e => setCommentName(e.target.value)} required style={{ padding: '12px 16px', background: 'var(--bg)', border: '1px solid var(--line)', borderRadius: '12px', outline: 'none' }} />
-              <textarea placeholder="What are your thoughts?" value={commentText} onChange={e => setCommentText(e.target.value)} required style={{ padding: '12px 16px', background: 'var(--bg)', border: '1px solid var(--line)', borderRadius: '12px', outline: 'none', minHeight: '100px', resize: 'vertical' }} />
-              <button type="submit" className="btn btn-primary" style={{ justifySelf: 'end', padding: '10px 24px', borderRadius: '12px' }}>Post Comment</button>
-            </form>
-            
-            <div className="comments-list" style={{ display: 'grid', gap: '24px' }}>
-              {!loadingComments && comments.length === 0 && <p style={{ color: 'var(--muted)', textAlign: 'center', padding: '20px 0' }}>Be the first to share your thoughts!</p>}
-              {comments.map(c => (
-                <div key={c.id} style={{ display: 'flex', gap: '16px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--blue-pale)', color: 'var(--blue)', display: 'grid', placeItems: 'center', fontWeight: 'bold', flexShrink: 0 }}>
-                    {c.author_name.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                      <strong style={{ color: 'var(--navy)', fontSize: '0.95rem' }}>{c.author_name}</strong>
-                      <span style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>{new Date(c.created_at).toLocaleDateString()}</span>
+
+          {/* Comments Modal Overlay */}
+          {showCommentsModal && (
+            <div className="modal-backdrop" onClick={(e) => { if (e.target === e.currentTarget) setShowCommentsModal(false); }} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'grid', placeItems: 'center', padding: '20px' }}>
+              <div className="modal-content" style={{ background: 'var(--card)', width: '100%', maxWidth: '600px', maxHeight: '85vh', overflowY: 'auto', borderRadius: '24px', padding: '32px', boxShadow: '0 24px 48px rgba(0,0,0,0.2)', position: 'relative', animation: 'modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+                <button onClick={() => setShowCommentsModal(false)} style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg)', border: '1px solid var(--line)', width: '36px', height: '36px', borderRadius: '50%', display: 'grid', placeItems: 'center', cursor: 'pointer', color: 'var(--muted)' }}>
+                  <X size={18} />
+                </button>
+                
+                <h3 style={{ fontSize: '1.4rem', color: 'var(--navy)', fontFamily: '"Space Grotesk", sans-serif', margin: '0 0 24px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <MessageSquare size={20} color="var(--blue)" /> Discussion ({comments.length})
+                </h3>
+                
+                <form onSubmit={handleCommentSubmit} style={{ display: 'grid', gap: '16px', marginBottom: '40px', background: 'var(--bg)', padding: '24px', borderRadius: '20px', border: '1px solid var(--line)' }}>
+                  <input type="text" placeholder="Your Name" value={commentName} onChange={e => setCommentName(e.target.value)} required style={{ padding: '14px 18px', background: '#fff', border: '1px solid var(--line)', borderRadius: '12px', outline: 'none', fontSize: '0.95rem', color: 'var(--navy)' }} />
+                  <textarea placeholder="Share your thoughts..." value={commentText} onChange={e => setCommentText(e.target.value)} required style={{ padding: '14px 18px', background: '#fff', border: '1px solid var(--line)', borderRadius: '12px', outline: 'none', minHeight: '100px', resize: 'vertical', fontSize: '0.95rem', color: 'var(--navy)' }} />
+                  <button type="submit" className="btn btn-primary" style={{ justifySelf: 'start', padding: '12px 28px', fontSize: '0.95rem', borderRadius: '12px' }}>Post Comment</button>
+                </form>
+                
+                <div className="comments-list" style={{ display: 'grid', gap: '24px' }}>
+                  {!loadingComments && comments.length === 0 && <p style={{ color: 'var(--muted)', textAlign: 'center', padding: '32px 20px', background: 'var(--bg)', borderRadius: '16px', border: '1px dashed var(--line)', fontSize: '0.95rem' }}>No comments yet. Be the first to start the conversation!</p>}
+                  {comments.map(c => (
+                    <div key={c.id} style={{ display: 'flex', gap: '16px', padding: '20px', background: '#fff', borderRadius: '16px', border: '1px solid var(--line)' }}>
+                      <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--blue), var(--lavender))', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 'bold', flexShrink: 0, fontSize: '1.05rem', boxShadow: 'var(--shadow)' }}>
+                        {c.author_name.charAt(0).toUpperCase()}
+                      </div>
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                          <strong style={{ color: 'var(--navy)', fontSize: '1rem' }}>{c.author_name}</strong>
+                          <span style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>{new Date(c.created_at).toLocaleDateString()}</span>
+                        </div>
+                        <p style={{ color: 'var(--text)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0, whiteSpace: 'pre-wrap' }}>{c.content}</p>
+                      </div>
                     </div>
-                    <p style={{ color: 'var(--text)', fontSize: '0.95rem', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{c.content}</p>
-                  </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </article>
       </div>
     </div>
   );
