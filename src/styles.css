@@ -503,10 +503,13 @@ button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
   .footer-top{grid-template-columns:1fr 1fr 1fr 1fr}
 }
 @media(max-width:768px){
-  .topbar{top:10px;left:10px;right:10px;transform:none;padding:8px 10px}
+  .topbar{top:12px;left:12px;right:12px;transform:none;padding:10px}
   .menu-toggle{display:inline-grid}
-  .nav{position:absolute;top:54px;left:-10px;right:-10px;display:none;flex-direction:column;padding:10px;background:var(--topbar-mob);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg)}
-  .nav.open{display:flex}.nav-sep{display:none}
+  .nav{position:absolute;top:calc(100% + 12px);left:0;right:0;flex-direction:column;padding:24px 20px;background:var(--card);backdrop-filter:blur(32px) saturate(200%);border:1px solid var(--line);border-radius:28px;box-shadow:0 20px 40px rgba(0,0,0,0.15);gap:12px;opacity:0;transform:translateY(-16px) scale(0.98);visibility:hidden;transition:all 0.4s cubic-bezier(0.16,1,0.3,1)}
+  .nav.open{opacity:1;transform:translateY(0) scale(1);visibility:visible}
+  .nav-sep{display:none}
+  .nav-link{width:100%;text-align:left;padding:16px 24px;font-size:1.1rem;border-radius:18px;background:var(--bg);border:1px solid var(--line);color:var(--text-h);box-shadow:var(--shadow)}
+  .nav-link.active{background:linear-gradient(135deg,var(--blue),var(--lavender));color:#fff;border-color:transparent}
   .hero-copy h1{font-size:clamp(3.5rem,16vw,5.5rem)}
   .hero-visual,.axiom-scene{min-height:340px}
   .float-card{max-width:200px;padding:10px}
@@ -532,8 +535,15 @@ button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
   
   /* Mobile padding and sizes */
   .article-hero { padding: 100px 20px 60px; }
-  .article-content { padding: 24px; font-size: 1.05rem; line-height: 1.7; border-radius: 16px; }
+  .article-hero h1 { font-size: clamp(2rem, 10vw, 3rem) !important; }
+  .article-hero-meta { flex-direction: column; gap: 12px !important; }
+  .article-content { padding: 24px; font-size: 1.05rem; line-height: 1.7; border-radius: 16px; overflow-wrap: break-word; word-wrap: break-word; }
   .article-body-text::first-letter { font-size: 4rem; padding: 8px 12px 8px 0; }
+  .article-body-text pre, .article-body-text .ql-syntax { white-space: pre-wrap !important; overflow-x: auto; max-width: 100%; padding: 16px !important; }
+  .article-body-text img { border-radius: 8px; }
+  .pull-quote { margin: 32px 0 !important; padding: 24px !important; border-radius: 16px !important; }
+  .pull-quote p { font-size: 1.25rem !important; }
+  .engagement-section form { padding: 20px !important; }
   .submit-form, .submit-guide-card, .submit-formats-card, .submit-faq-card { padding: 20px !important; border-radius: 16px; }
   .tracker-wrapper { padding: 24px !important; border-radius: 16px !important; }
 }
